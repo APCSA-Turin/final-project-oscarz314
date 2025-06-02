@@ -3,6 +3,7 @@ package com.example;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Canvas extends JPanel {
     private int width;
     private int height;
     private ColorHistory colorHistory;
+    private Indicator indicator;
 
     //Draw lines between points
     private List<ColorPoints> currentPath;
@@ -23,7 +25,6 @@ public class Canvas extends JPanel {
     public Canvas(int width, int height){
         this.setPreferredSize(new Dimension(width, height));
         this.setOpaque(true);
-
         this.setBackground(Color.WHITE);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.width = width;
@@ -31,6 +32,21 @@ public class Canvas extends JPanel {
         allPath = new ArrayList<>(200);
         colorHistory = new ColorHistory(this);
         color = Color.BLACK;
+
+        // Mouse indicator
+        indicator = new Indicator();
+        this.add(indicator);
+        // Create a 1x1 transparent image
+        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+
+// Create a transparent cursor from that image
+        Cursor blankCursor = Toolkit.getDefaultToolkit()
+                .createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
+
+// Apply it to a component (e.g., JFrame)
+        this.setCursor(blankCursor);
+
+
 
         MouseAdapter ma = new MouseAdapter() {
             @Override
@@ -60,6 +76,7 @@ public class Canvas extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent e) {
+                indicator.setVisible(false);
                 //get mouse location
                 x = e.getX();
                 y = e.getY();
@@ -81,6 +98,12 @@ public class Canvas extends JPanel {
                 currentPath.add(nextPoint);
             }
 
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                indicator.setVisible(true);
+                indicator.setBounds(e.getX(), e.getY(), 100, 100);
+                indicator.updateIndicator(strokeSize, color);
+            }
         };
 
 

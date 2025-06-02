@@ -18,6 +18,11 @@ public class LaunchPage extends JFrame implements ActionListener {
         title.setFont(new Font("Arial", Font.PLAIN, 20));
         title.setBounds(pageHorizontal / 2 - (500 / 4), 0, 500 , 50);
 
+        // Explanation
+        JLabel explanation = new JLabel("Challenge yourself to paint quotes with a time constraint!");
+        explanation.setBounds(pageHorizontal / 2 - (500 / 3) + 20, (pageVertical / 2) - 100, 500 , 50);
+        frame.add(explanation);
+
         //Option
         options.setFont(new Font("Helvetica", Font.PLAIN, 15));
         options.setBounds(pageHorizontal / 2 - (500 / 3), (pageVertical / 2), 500 , 50);
