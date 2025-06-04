@@ -44,7 +44,7 @@ public class ColorHistory extends JFrame {
         frame.setResizable(false);
         frame.setVisible(true);
         frame.setFocusable(true);
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setAlwaysOnTop(true);
         frame.setTitle("Color Palette History");
         this.canvas = canvas;
@@ -64,5 +64,9 @@ public class ColorHistory extends JFrame {
 
             buttonGroup[currentIndex].setBackground(color);
             currentIndex++;
+    }
+
+    public void closeHistory(){
+        frame.dispose();
     }
 }

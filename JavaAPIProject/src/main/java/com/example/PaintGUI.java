@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,8 @@ public class PaintGUI extends JFrame {
     MenuBar menuBar;
     Menu fileMenu;
     MenuItem saveItem;
+    MenuItem importItem;
+    private Canvas canvas;
 
     PaintGUI(int time){
 
@@ -27,12 +30,15 @@ public class PaintGUI extends JFrame {
         menuBar = new MenuBar();
         fileMenu = new Menu("File");
         saveItem = new MenuItem("Save");
+        importItem = new MenuItem("Load");
         fileMenu.add(saveItem);
+        fileMenu.add(importItem);
+
         menuBar.add(fileMenu);
         this.setMenuBar(menuBar);
 
         //Frame
-        this.setPreferredSize(new Dimension(1500, 1000));
+        this.setPreferredSize(new Dimension(1800, 1000));
         this.pack();
         this.setFocusable(true);
         this.setLocationRelativeTo(null);
@@ -48,9 +54,10 @@ public class PaintGUI extends JFrame {
         canvasPanel.setLayout(springLayout);
 
         //Canvas
-        Canvas canvas = new Canvas(1500, 800);
+        canvas = new Canvas(1500, 800);
         canvasPanel.add(canvas);
         springLayout.putConstraint(SpringLayout.NORTH, canvas, 50, SpringLayout.NORTH, canvasPanel);
+        springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, canvas, 0, SpringLayout.HORIZONTAL_CENTER, canvasPanel);
 
         //Color picker
         JButton chooseColorButton = new JButton("Pick Color");
@@ -64,7 +71,7 @@ public class PaintGUI extends JFrame {
         });
         canvasPanel.add(chooseColorButton);
         springLayout.putConstraint(SpringLayout.NORTH, chooseColorButton, 10, SpringLayout.NORTH, canvasPanel);
-        springLayout.putConstraint(SpringLayout.WEST, chooseColorButton, 25, SpringLayout.WEST, canvasPanel);
+        springLayout.putConstraint(SpringLayout.WEST, chooseColorButton, 10, SpringLayout.WEST, canvasPanel);
 
         //Reset canvas
         JButton resetButton = new JButton("Reset");
@@ -97,17 +104,17 @@ public class PaintGUI extends JFrame {
         springLayout.putConstraint(SpringLayout.WEST, eraserToggle, 250, SpringLayout.WEST, canvasPanel);
 
         //Timer
-        TimerBar barTimer = new TimerBar(startTime);
+        TimerBar barTimer = new TimerBar(startTime, this);
 
         canvasPanel.add(barTimer);
-        springLayout.putConstraint(SpringLayout.NORTH, barTimer, 10, SpringLayout.NORTH, canvasPanel);
-        springLayout.putConstraint(SpringLayout.WEST, barTimer, 350, SpringLayout.WEST, canvasPanel);
+        springLayout.putConstraint(SpringLayout.NORTH, barTimer, 25, SpringLayout.NORTH, canvasPanel);
+        springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, barTimer, 0, SpringLayout.HORIZONTAL_CENTER, canvasPanel);
 
         //Quote
         Quote quote = new Quote();
         canvasPanel.add(quote);
-        springLayout.putConstraint(SpringLayout.NORTH, quote, 10, SpringLayout.NORTH, canvasPanel);
-        springLayout.putConstraint(SpringLayout.WEST, quote, 600, SpringLayout.WEST, canvasPanel);
+        springLayout.putConstraint(SpringLayout.NORTH, quote, 0, SpringLayout.NORTH, canvasPanel);
+        springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, quote, 0, SpringLayout.HORIZONTAL_CENTER, canvasPanel);
 
         //Brush size
         JSlider brushSlider = new JSlider(0,1, 150,5);
@@ -143,6 +150,15 @@ public class PaintGUI extends JFrame {
                 savePanel(canvas);
             }
         });
+
+        importItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { loadImage(); }
+        });
+    }
+
+    public Canvas getCanvas(){
+        return canvas;
     }
 
     public void savePanel(JPanel panel){
@@ -164,6 +180,21 @@ public class PaintGUI extends JFrame {
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 System.out.println("error");
+            }
+        }
+    }
+
+    public void loadImage(){
+        JFileChooser fileChooser = new JFileChooser();
+        int response = fileChooser.showOpenDialog(null);
+
+        if(response == JFileChooser.APPROVE_OPTION){
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                BufferedImage image = ImageIO.read(new File(selectedFile.getAbsolutePath()));
+                canvas.setImage(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

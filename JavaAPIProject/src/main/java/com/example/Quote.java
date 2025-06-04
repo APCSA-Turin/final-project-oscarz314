@@ -31,7 +31,7 @@ public class Quote extends JPanel {
         JLabel display = new JLabel(quote);
         display.setSize(1000, 50);
         this.add(display);
-        this.setLayout(null);
+//        this.setLayout(null);
 
     }
 

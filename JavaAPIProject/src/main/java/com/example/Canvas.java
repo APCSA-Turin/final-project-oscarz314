@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Canvas extends JPanel {
+
     private int strokeSize = 4;
     private Color color;
     private Color tempColor;
@@ -36,17 +37,11 @@ public class Canvas extends JPanel {
         // Mouse indicator
         indicator = new Indicator();
         this.add(indicator);
-        // Create a 1x1 transparent image
+
+        // Set cursor to transparent
         BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-
-// Create a transparent cursor from that image
-        Cursor blankCursor = Toolkit.getDefaultToolkit()
-                .createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
-
-// Apply it to a component (e.g., JFrame)
+        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
         this.setCursor(blankCursor);
-
-
 
         MouseAdapter ma = new MouseAdapter() {
             @Override
@@ -167,6 +162,11 @@ public class Canvas extends JPanel {
     public void Undo(){
         allPath.remove(allPath.getLast());
         paintComponent(getGraphics());
+    }
+
+    public void setImage(BufferedImage image){
+        Graphics g = getGraphics();
+        g.drawImage(image,0, 0, null);
     }
 
     public void addColorHistory(){
