@@ -69,4 +69,22 @@ public class ColorHistory extends JFrame {
     public void closeHistory(){
         frame.dispose();
     }
+
+    public Color averageColor(){
+        int colorTotal = 0;
+        int redSum = 0;
+        int blueSum = 0;
+        int greenSum = 0;
+
+        for(int i = 0; i < maxIndex; i++){
+            if(buttonGroup[i] != null){
+                redSum += buttonGroup[i].getBackground().getRed();
+                blueSum += buttonGroup[i].getBackground().getBlue();
+                greenSum += buttonGroup[i].getBackground().getGreen();
+                colorTotal++;
+            }
+        }
+        return new Color(redSum/colorTotal, blueSum/colorTotal, greenSum/colorTotal);
+    }
+
 }

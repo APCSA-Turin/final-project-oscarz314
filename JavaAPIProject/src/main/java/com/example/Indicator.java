@@ -23,7 +23,7 @@ public class Indicator extends JPanel {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setColor(color);
-        g2.fillRect(0, 0, strokeSize, strokeSize);
+        g2.drawRect(0, 0, strokeSize, strokeSize);
         g2.dispose();
     }
 }

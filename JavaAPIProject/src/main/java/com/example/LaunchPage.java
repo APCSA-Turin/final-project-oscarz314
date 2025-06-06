@@ -20,15 +20,15 @@ public class LaunchPage extends JFrame implements ActionListener {
 
         // Explanation
         JLabel explanation = new JLabel("Challenge yourself to paint quotes with a time constraint!");
-        explanation.setBounds(pageHorizontal / 2 - (500 / 3) + 20, (pageVertical / 2) - 100, 500 , 50);
+        explanation.setBounds(pageHorizontal / 2 - (500 / 3), (pageVertical / 2) - 100, 500 , 50);
         frame.add(explanation);
 
         //Option
         options.setFont(new Font("Helvetica", Font.PLAIN, 15));
-        options.setBounds(pageHorizontal / 2 - (500 / 3), (pageVertical / 2), 500 , 50);
+        options.setBounds(pageHorizontal / 2 - (500 / 3) - 20, (pageVertical / 2), 500 , 50);
 
         //Button
-        button.setBounds(pageHorizontal / 2 + 20, (pageVertical / 2), 200, 50);
+        button.setBounds(pageHorizontal / 2, (pageVertical / 2), 200, 50);
         button.setFocusable(false);
         button.addActionListener(this);
 
@@ -37,6 +37,7 @@ public class LaunchPage extends JFrame implements ActionListener {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
+        frame.setResizable(false);
         frame.add(title);
         frame.add(options);
         frame.add(button);

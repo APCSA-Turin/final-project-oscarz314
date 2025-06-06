@@ -18,6 +18,7 @@ public class Canvas extends JPanel {
     private int height;
     private ColorHistory colorHistory;
     private Indicator indicator;
+    private BufferedImage image;
 
     //Draw lines between points
     private List<ColorPoints> currentPath;
@@ -71,7 +72,6 @@ public class Canvas extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent e) {
-                indicator.setVisible(false);
                 //get mouse location
                 x = e.getX();
                 y = e.getY();
@@ -115,6 +115,8 @@ public class Canvas extends JPanel {
         g.clearRect(0, 0, width, height);
         g.dispose();
 
+        image = null;
+
         currentPath = null;
         allPath = new ArrayList<>(200);
 
@@ -126,6 +128,11 @@ public class Canvas extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d= (Graphics2D) g;
+
+        //draws picture
+        if(image != null){
+            g2d.drawImage(image, 0, 0, null);
+        }
 
         //redraws lines
         for(List<ColorPoints> path: allPath){
@@ -165,8 +172,8 @@ public class Canvas extends JPanel {
     }
 
     public void setImage(BufferedImage image){
-        Graphics g = getGraphics();
-        g.drawImage(image,0, 0, null);
+        this.image = image;
+        repaint();
     }
 
     public void addColorHistory(){

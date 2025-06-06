@@ -29,10 +29,14 @@ public class TimerBar extends JProgressBar {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                     barTimer.setValue(barTimer.getValue() - 1);
+                     barTimer.setValue(barTimer.getValue() - 10);
                      if(barTimer.getValue() == 0 && ended == false){
                          ended = true;
-                         JOptionPane.showMessageDialog(null, "Pens down! challenge ended", "title", JOptionPane.INFORMATION_MESSAGE);
+                         Color averageColor = paintGUI.getCanvas().returnColorHistory().averageColor();
+                         JOptionPane.showMessageDialog(null, "Pens down! challenge ended. Fun fa" +
+                                 "ct your average color was Red: " + averageColor.getRed() + ", Blue: "
+                                 + averageColor.getBlue() + ", Green: " + averageColor.getGreen(), "title",
+                                 JOptionPane.INFORMATION_MESSAGE);
                          paintGUI.savePanel(paintGUI.getCanvas());
                          paintGUI.getCanvas().returnColorHistory().closeHistory();
                          paintGUI.dispose();
