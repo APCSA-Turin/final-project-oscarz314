@@ -72,6 +72,7 @@ public class Canvas extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent e) {
+                indicator.setVisible(false);
                 //get mouse location
                 x = e.getX();
                 y = e.getY();

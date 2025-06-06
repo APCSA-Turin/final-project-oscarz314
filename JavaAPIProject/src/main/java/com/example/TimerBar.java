@@ -29,7 +29,7 @@ public class TimerBar extends JProgressBar {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                     barTimer.setValue(barTimer.getValue() - 10);
+                     barTimer.setValue(barTimer.getValue() - 1);
                      if(barTimer.getValue() == 0 && ended == false){
                          ended = true;
                          Color averageColor = paintGUI.getCanvas().returnColorHistory().averageColor();
